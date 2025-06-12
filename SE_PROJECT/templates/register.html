@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+        /* === Animated Background === */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #1f1c2c, #928dab, #2c3e50, #4b6cb7);
+            background-size: 400% 400%;
+            animation: backgroundShift 12s ease infinite;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* === Rotating Emoji Icons === */
+        .icon-rotator {
+            position: absolute;
+            top: 30px;
+            font-size: 80px;
+            color: #ffffffcc;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .icon-rotator::after {
+            content: "📝";
+            animation: iconChange 20s steps(1) infinite;
+        }
+
+        @keyframes iconChange {
+            0% { content: "📝"; }       /* Memo */
+            25% { content: "📋"; }      /* Clipboard */
+            50% { content: "👤"; }      /* Person */
+            75% { content: "📚"; }      /* Books */
+            100% { content: "📝"; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* === Register Form === */
+        .register-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 24px;
+            font-size: 30px;
+            color: #0d47a1;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: linear-gradient(to right, #66bb6a, #43a047);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #43a047, #2e7d32);
+            transform: translateY(-2px);
+        }
+
+        a {
+            color: #1976d2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="icon-rotator"></div>
+
+    <div class="register-container">
+        <h2>Register</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <select name="role" required>
+                <option value="">-- Select Role --</option>
+                <option value="student">Student</option>
+                <option value="staff">Staff</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Register</button>
+        </form>
+
+        <p><a href="/login">Already registered? Login</a></p>
+    </div>
+</body>
+</html>

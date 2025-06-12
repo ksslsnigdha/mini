@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Item</title>
+    <style>
+        /* === Animated Gradient Background === */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #a8edea, #fed6e3, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* === Container Styling === */
+        .report-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 24px;
+            font-size: 28px;
+            color: #2c3e50;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin: 12px 0 6px;
+            text-align: left;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #64b5f6;
+            outline: none;
+            box-shadow: 0 0 8px rgba(100, 181, 246, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background: linear-gradient(to right, #42a5f5, #478ed1);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #1e88e5, #1565c0);
+            transform: translateY(-2px);
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="report-container">
+        <h2>Report Lost/Found Item</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="type">Report Type</label>
+            <select name="type" id="type" required>
+                <option value="" disabled selected>Select Report Type</option>
+                <option value="lost">Lost</option>
+                <option value="found">Found</option>
+            </select>
+
+            <label for="title">Item Title</label>
+            <input name="title" id="title" placeholder="Item Title" required>
+
+            <label for="description">Description</label>
+            <textarea name="description" id="description" placeholder="Describe the item..." required></textarea>
+
+            <label for="category">Category</label>
+            <select name="category" id="category" required>
+                <option value="" disabled selected>Select Category</option>
+                {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat.title() }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="image">Upload Image (optional)</label>
+            <input type="file" name="image" id="image" accept="image/*">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

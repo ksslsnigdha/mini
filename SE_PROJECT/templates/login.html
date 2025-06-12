@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        /* === Animated Background === */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #1f1c2c, #928dab, #2c3e50, #4b6cb7);
+            background-size: 400% 400%;
+            animation: backgroundShift 12s ease infinite;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* === Rotating Emoji Icons === */
+        .icon-rotator {
+            position: absolute;
+            top: 30px;
+            font-size: 80px;
+            color: #ffffffcc;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Change icons every 5s using pseudo elements */
+        .icon-rotator::after {
+            content: "🔐";
+            animation: iconChange 20s steps(1) infinite;
+        }
+
+        @keyframes iconChange {
+            0% { content: "🔐"; }       /* Lock */
+            25% { content: "📦"; }      /* Package */
+            50% { content: "🎒"; }      /* Backpack */
+            75% { content: "🕵️"; }     /* Detective */
+            100% { content: "🔐"; }     /* Repeat */
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* === Login Form === */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            margin-bottom: 24px;
+            font-size: 30px;
+            color: #0d47a1;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #1e88e5, #1565c0);
+            transform: translateY(-2px);
+        }
+
+        .flash.error {
+            color: white;
+            background-color: #e53935;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        a {
+            color: #1976d2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="icon-rotator"></div>
+
+    <div class="login-container">
+        <h2>Login</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <p><a href="/register">No account? Register</a></p>
+    </div>
+</body>
+</html>

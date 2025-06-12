@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      background-size: 400% 400%;
+      animation: animateBG 10s ease infinite;
+    }
+
+    @keyframes animateBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h2 {
+      color: #000;
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    input[type="text"],
+    select,
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #fffdf8;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: 0.3s;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    }
+
+    textarea {
+      resize: vertical;
+      height: 120px;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 25px;
+      background: linear-gradient(to right, #36d1dc, #5b86e5);
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #5b86e5, #36d1dc);
+      transform: translateY(-2px);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #222;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    img.current-image {
+      margin-top: 12px;
+      max-width: 180px;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>Edit Report</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <label for="type">Type</label>
+    <select name="type" id="type" required>
+      <option value="lost" {% if report['type'] == 'lost' %}selected{% endif %}>Lost</option>
+      <option value="found" {% if report['type'] == 'found' %}selected{% endif %}>Found</option>
+    </select>
+
+    <label for="category">Category</label>
+    <select name="category" id="category" required>
+      {% for cat in categories %}
+        <option value="{{ cat }}" {% if report['category'] == cat %}selected{% endif %}>{{ cat.capitalize() }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" value="{{ report['title'] }}" required>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description" required>{{ report['description'] }}</textarea>
+
+    <label for="image">Upload New Image</label>
+    <input type="file" id="image" name="image" accept="image/*">
+
+    {% if report['image'] %}
+      <p>Current Image:</p>
+      <img src="{{ url_for('static', filename='uploads/' + report['image']) }}" alt="Current Image" class="current-image">
+    {% endif %}
+
+    <button type="submit">Update Report</button>
+  </form>
+  <a href="{{ url_for('dashboard') }}">&larr; Back to Dashboard</a>
+</body>
+</html>

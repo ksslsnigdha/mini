@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - Lost & Found</title>
+    <style>
+        /* === Animated Background === */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #a1c4fd, #d4fc79);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .contact-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #1976d2;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_index.css') }}">
+</head>
+<body>
+    <div class="contact-container">
+        <a href="/">⬅ Back to Home</a>
+        <h2>Contact</h2>
+        <p><strong>Phone No:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> support@lostfound.com</p>
+    </div>
+</body>
+</html>
